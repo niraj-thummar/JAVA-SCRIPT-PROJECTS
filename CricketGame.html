@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            text-align: center;
+        }
+        .button-image{
+            border: 0px;
+        }
+        button{
+            border: 0px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        #reset{
+            border-radius: 30px;
+            width: 80px;
+            height: 30px;
+            background-color: rgb(83, 83, 233);
+            color: aliceblue;
+            box-shadow: 4px 5px rgb(214, 214, 214);
+        }
+    </style>
+</head>
+<body>
+    <h1>Bat Ball Stump Game</h1>
+
+    <button onclick="
+    let computerChoise = choiceRandom();
+    let userChoise = 'bat';
+    let result = whoWin(userChoise,computerChoise);
+    showResult(userChoise,computerChoise,result);
+    "> <img src="https://www.shutterstock.com/image-photo/cricket-bat-isolated-on-white-600nw-2450613173.jpg" alt="bat" class="button-image" height="100px">
+    </button>
+
+    
+
+    <button onclick="
+    computerChoise = choiceRandom();
+    userChoise = 'ball';
+     result = whoWin(userChoise,computerChoise);
+     showResult(userChoise,computerChoise,result);
+    "><img src="https://media.istockphoto.com/id/1323017815/photo/cricket-ball-on-green-grass-of-cricket-pitch-background.jpg?s=612x612&w=0&k=20&c=W4JJei3HiYOqSjtGZV88VbpQ0Zlaqdjp6gds8mNXBmk=" alt="ball"  class="button-image" height="100px"></button>
+
+    <button  onclick="
+    computerChoise = choiceRandom();
+    userChoise = 'stump';
+     result = whoWin(userChoise,computerChoise);
+     showResult(userChoise,computerChoise,result);
+    "><img src="data:image/jpeg;base64,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" alt="stump"  class="stump-image" height="100px"></button>
+
+   
+
+    <h3 id="user-move"></h3>
+    <h3 id="computer-move"></h3>
+    <h3 id="result"></h3>
+    <h3 id="score"></h3>
+     <button onclick="localStorage.clear()
+    resetScore();
+    " id="reset">
+        Reset
+    </button>
+
+    <script>
+         let scoreStr = localStorage.getItem('score');
+         let score;
+         resetScore(scoreStr);
+         function resetScore(scoreStr){
+            
+         if(scoreStr != undefined){
+            score = JSON.parse(scoreStr);
+         }
+         else {
+    score = {
+        lose: 0,
+        win: 0,
+        tie: 0,
+        
+    };
+      
+}
+    score.displayScore = function () {
+            return `win: ${this.win}, lose: ${this.lose}, tie: ${this.tie}`;
+        }
+        showResult();
+         }
+         
+           
+        function choiceRandom(){
+            let random = Math.ceil(Math.random()*3);
+         if(random == 1){
+           return 'bat';
+        }
+         else if(random == 2){
+           return 'ball';
+         }
+         else{
+           return 'stump';
+         }
+    }
+
+    function showResult(userChoise,computerChoise,result){
+        document.querySelector('#user-move').innerText = 
+        userChoise != undefined ?`user choise is ${userChoise}.`:'';
+        document.querySelector('#computer-move').innerText = 
+        computerChoise != undefined?`computer choosen ${computerChoise}.`:'';
+        document.querySelector('#result').innerText = 
+        result != undefined ?`and ${result}`:'';
+        document.querySelector('#score').innerText = 
+        score != undefined?`${score.displayScore()}`:'';
+        localStorage.setItem('#score',JSON.stringify(score));
+    }
+ 
+
+    function whoWin(ueserChoise,computerChoise){
+        if(ueserChoise === 'ball'){
+             if(computerChoise === 'ball'){
+                   score.tie++;
+                   return 'tie';
+            }
+             else if(computerChoise === 'stump'){
+                score.win++;
+                return 'user won';
+             }
+            else{
+                score.lose++;
+                 return 'computer won';
+             }
+             
+        }
+        else if(ueserChoise === 'bat'){
+            if(computerChoise === 'ball'){
+                score.win++;
+                   return 'user won';
+            }
+             else if(computerChoise === 'stump'){
+                score.lose++;
+                return 'computer won';
+             }
+            else{
+                score.tie++;
+                 return 'tie';
+             }
+        }
+        else if(ueserChoise === 'stump'){
+            if(computerChoise === 'ball'){
+                score.lose++;
+                   return 'computer won';
+            }
+             else if(computerChoise === 'stump'){
+                score.tie++;
+                return 'tie';
+             }
+            else{
+                score.win++;
+                 return 'user won';
+             }
+        }
+        
+    }
+    </script>
+
+</body>
+</html>
