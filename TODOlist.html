@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex; 
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #heading {
+        text-align: center;
+        font-family: arial;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: 200px 150px 100px;
+        column-gap: 10px;
+        row-gap: 10px;
+        margin-top: 10px;
+        align-items: center;
+      }
+
+      #Todo-input,
+      #Todo-date {
+        font-size: 15px;
+        padding: 10px 5px;
+      }
+
+      .btn-delete {
+        background-color: rgb(101, 7, 7);
+        color: white;
+        padding: 15px 0px;
+        border: 0px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      .btn-todo {
+        background-color: rgb(9, 114, 9);
+        color: white;
+        padding: 15px 0px;
+        border: 0px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="heading">Todo App</h1>
+
+    <div class="grid-container">
+      <input type="text" placeholder="Enter TODO heare" id="Todo-input" />
+      <input type="date" id="Todo-date" />
+      <button onclick="addTodo()" class="btn-todo">Add</button>
+    </div>
+    <div class="Todo-container grid-container"></div>
+
+    <script>
+      let todoList = [];
+      displayItems();
+
+      function addTodo() {
+        let inputElement = document.querySelector("#Todo-input");
+        let dateElement = document.querySelector("#Todo-date");
+        let todoItem = inputElement.value;
+        let todoDate = dateElement.value;
+        todoList.push({ item: todoItem, dueDate: todoDate });
+        inputElement.value = "";
+        dateElement.value = "";
+        displayItems();
+      }
+
+      function displayItems() {
+        let containerElement = document.querySelector(".Todo-container");
+        let newHtml = "";
+        for (i = 0; i < todoList.length; i++) {
+          let item = todoList[i].item;
+          let dueDate = todoList[i].dueDate;
+          newHtml += `
+          <span>${item}</span>
+          <span>${dueDate}</span>
+          <button onclick="todoList.splice(${i},1); displayItems()" class="btn-delete">Delete</button>
+          `;
+        }
+        containerElement.innerHTML = newHtml;
+      }
+    </script>
+  </body>
+</html>
