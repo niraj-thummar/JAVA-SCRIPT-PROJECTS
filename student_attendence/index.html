@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+     <style>
+      body{
+        background-color: black;
+      }
+      #Allprs{
+        background-color: greenyellow;
+        border: 0px;
+        border-radius: 10px;
+        font-family: cursive;
+      }
+      #Allabs{
+        background-color: red;
+        border: 0px;
+        border-radius: 10px;
+        font-family: cursive;
+      }
+      #btnA{
+        background-color: blue;
+        border: 0px;
+        border-radius: 10px;
+        font-family: cursive;
+      }
+      #btnP{
+        background-color: red;
+        border: 0px;
+        border-radius: 10px;
+        font-family: cursive;
+      }
+      #heading{
+        text-align: center;
+        font-family: cursive;
+        color: white;
+      }
+     </style>
+  </head>
+  <body>
+    <h1 id="heading">Student Attendence Tracker</h1>
+    <div id="studentList"></div>
+    <div class="summary" style="color: white;">
+      Absent: <span id="AbsentCount">0</span> 
+      Present:<span id="presentCount">10</span>
+    </div>
+    <button id="Allprs" style="color: white;">All Present</button>
+    <button id="Allabs" style="color: white;">All Absent</button>
+
+    <div>
+      <h6 style="color: white;">Absent Roll Numbers:</h6>
+      <div id="absentRolls" style="color: white;"></div>
+    </div>
+
+    <script>
+      let studentArr = [
+        "101 Jiya Kyada",
+        "102 Shah Dhvani Hitesh ",
+        "103 Saraya Mohit Haresh",
+        "104 Zalavadiya Heet Siddharth",
+        "105 Darshil Dobariya",
+        "106 Nafisa Gandhi",
+        "107 Vasani Yashvi Niteshbhai",
+        "108 Delvadiya Manavkumar Kirtibhai",
+        "109 Ashara Palak Gopalbhai",
+        "110 Lunagariya Greshi Kamleshbhai",
+        "111 Nanavati Shrushti Gargesh ",
+        "112 Ranpara Jay Manishbhai",
+        "113 Disha Mehta",
+        "114 Thummar Niraj Bhaveshbhai",
+        "115 Kachhava Nakul Umeshbhai ",
+        "116 Kanabar Urva Darshanbhai",
+        "117 Nakar Dhruvil Hitesh ",
+        "118 Poshiya Priyanshi Ajaybhai",
+        "119 Baravalia Dharitri Manharbhai",
+        "120 Muchhara Kashish Hiteshbhai",
+      ];
+
+      let statuses = [];
+      for (let i = 0; i < studentArr.length; i++) {
+        statuses.push("Present");
+      }
+      let prsCount = studentArr.length,
+        absCount = 0;
+
+      document.write('<table border="1" class="table table-dark table-striped">');
+      document.write(
+        '<tr><th>Name</th><th>Status</th><th colspan="2">Action</th></tr>'
+      );
+
+      for (let i = 0; i < studentArr.length; i++) {
+        document.write("<tr>");
+        document.write(`<td>${studentArr[i]}</td>`);
+        document.write(`<td id="status-${i}">Present</td>`);
+        document.write(
+          `<td><button onclick="markPresent(${i})" id='btnA'>Present</button></td>`
+        );
+        document.write(
+          `<td><button onclick="markAbsent(${i})" id='btnP'>Absent</button></td>`
+        );
+        document.write("</tr>");
+      }
+
+      document.write("</table>");
+
+      function updateCounts() {
+        document.getElementById("presentCount").innerHTML = prsCount;
+        document.getElementById("AbsentCount").innerHTML = absCount;
+      }
+
+      function updateAbsentRolls() {
+        let absentDiv = document.getElementById("absentRolls");
+        let rolls = [];
+        for (let i = 0; i < statuses.length; i++) {
+          if (statuses[i] === "Absent") {
+            rolls.push(studentArr[i].split(" ")[0]);
+          }
+        }
+        absentDiv.innerHTML = rolls.join(", ");
+      }
+
+      function markPresent(i) {
+        if (statuses[i] === "Absent") {
+          statuses[i] = "Present";
+          prsCount++;
+          absCount--;
+          document.getElementById(`status-${i}`).innerText = "Present";
+          updateCounts();
+          updateAbsentRolls();
+        }
+      }
+
+      function markAbsent(i) {
+        if (statuses[i] === "Present") {
+          statuses[i] = "Absent";
+          prsCount--;
+          absCount++;
+          document.getElementById(`status-${i}`).innerText = "Absent";
+          updateCounts();
+          updateAbsentRolls();
+        }
+      }
+
+        document.getElementById("Allprs").addEventListener("click", function () {
+          for (let i = 0; i < statuses.length; i++) {
+            statuses[i] = "Present";
+            document.getElementById(`status-${i}`).innerText = "Present";
+          }
+          prsCount = studentArr.length;
+          absCount = 0;
+          updateCounts();
+          updateAbsentRolls();
+        });
+
+        document.getElementById("Allabs").addEventListener("click", function () {
+          for (let i = 0; i < statuses.length; i++) {
+            statuses[i] = "Absent";
+            document.getElementById(`status-${i}`).innerText = "Absent";
+          }
+          prsCount = 0;
+          absCount = studentArr.length;
+          updateCounts();
+          updateAbsentRolls();
+        });
+
+      updateAbsentRolls();
+    </script>
+  </body>
+</html>
